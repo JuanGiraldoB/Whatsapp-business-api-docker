@@ -1,0 +1,5 @@
+.vscode
+.ws
+*.pem
+config.json
+__pycache__

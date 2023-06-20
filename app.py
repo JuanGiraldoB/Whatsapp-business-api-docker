@@ -1,5 +1,5 @@
 import json
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 import flask
 from messages.message_helper import get_text_message_input, send_message
 from dotenv import load_dotenv
@@ -15,11 +15,24 @@ config = {
     "RECIPIENT_WAID": os.getenv("RECIPIENT_WAID"),
     "VERSION": os.getenv("VERSION"),
     "PHONE_NUMBER_ID": os.getenv("PHONE_NUMBER_ID"),
-    "ACCESS_TOKEN": os.getenv("ACCESS_TOKEN")
+    "ACCESS_TOKEN": os.getenv("ACCESS_TOKEN"),
+    "VERIFY_TOKEN": os.getenv("VERIFY_TOKEN")
 }
 
 app.config.update(config)
 print(app.config)
+
+
+@app.route("/webhook/", methods=["POST", "GET"])
+def webhook_whatsapp():
+    """__summary__: Get message from the webhook"""
+
+    if request.method == "GET":
+        if request.args.get('hub.verify_token') == config["VERIFY_TOKEN"]:
+            return request.args.get('hub.challenge')
+        return "Authentication failed. Invalid Token."
+
+    return jsonify({"status": "success"}, 200)
 
 
 @app.route("/")

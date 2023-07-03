@@ -62,12 +62,10 @@ def get_text_message_input(recipient, text):
     # })
 
     return json.dumps(
-
-
         {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
-            "to": recipient,
+            "to": 573005159,
             "type": "interactive",
             "interactive": {
                 "type": "list",
@@ -82,7 +80,7 @@ def get_text_message_input(recipient, text):
                     "text": "Tu solecito"
                 },
                 "action": {
-                    "button": "No funcino :(",
+                    "button": "Me amas?",
                     "sections": [
                         {
                             "title": "Me amas?",

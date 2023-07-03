@@ -61,57 +61,90 @@ def get_text_message_input(recipient, text):
     #     }
     # })
 
+    # return json.dumps(
+    #     {
+    #         "messaging_product": "whatsapp",
+    #         "recipient_type": "individual",
+    #         "to": recipient,
+    #         "type": "interactive",
+    #         "interactive": {
+    #             "type": "list",
+    #             "header": {
+    #                 "type": "text",
+    #                 "text": "HEADER_TEXT"
+    #             },
+    #             "body": {
+    #                 "text": "BODY_TEXT"
+    #             },
+    #             "footer": {
+    #                 "text": "FOOTER_TEXT"
+    #             },
+    #             "action": {
+    #                 "button": "BUTTON_TEXT",
+    #                 "sections": [
+    #                     {
+    #                         "title": "SECTION_1_TITLE",
+    #                         "rows": [
+    #                             {
+    #                                 "id": "SECTION_1_ROW_1_ID",
+    #                                 "title": "SECTION_1_ROW_1_TITLE",
+    #                                 "description": "SECTION_1_ROW_1_DESCRIPTION"
+    #                             },
+    #                             {
+    #                                 "id": "SECTION_1_ROW_2_ID",
+    #                                 "title": "SECTION_1_ROW_2_TITLE",
+    #                                 "description": "SECTION_1_ROW_2_DESCRIPTION"
+    #                             }
+    #                         ]
+    #                     },
+    #                     {
+    #                         "title": "SECTION_2_TITLE",
+    #                         "rows": [
+    #                             {
+    #                                 "id": "SECTION_2_ROW_1_ID",
+    #                                 "title": "SECTION_2_ROW_1_TITLE",
+    #                                 "description": "SECTION_2_ROW_1_DESCRIPTION"
+    #                             },
+    #                             {
+    #                                 "id": "SECTION_2_ROW_2_ID",
+    #                                 "title": "SECTION_2_ROW_2_TITLE",
+    #                                 "description": "SECTION_2_ROW_2_DESCRIPTION"
+    #                             }
+    #                         ]
+    #                     }
+    #                 ]
+    #             }
+    #         }
+    #     }
+    # )
+
     return json.dumps(
         {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
-            "to": 573005159,
+            "to": recipient,
             "type": "interactive",
             "interactive": {
-                "type": "list",
-                "header": {
-                    "type": "text",
-                    "text": "Amorcito"
-                },
+                "type": "button",
                 "body": {
-                    "text": "Te amo muchote"
-                },
-                "footer": {
-                    "text": "Tu solecito"
+                    "text": "BUTTON_TEXT"
                 },
                 "action": {
-                    "button": "Me amas?",
-                    "sections": [
+                    "buttons": [
                         {
-                            "title": "Me amas?",
-                            "rows": [
-                                {
-                                    "id": "SECTION_1_ROW_1_ID",
-                                    "title": "No",
-                                    "description": "Toy tiste :("
-                                },
-                                {
-                                    "id": "SECTION_1_ROW_2_ID",
-                                    "title": "Shi",
-                                    "description": "Toy feliz :)"
-                                }
-                            ]
+                            "type": "reply",
+                            "reply": {
+                                "id": "UNIQUE_BUTTON_ID_1",
+                                "title": "BUTTON_TITLE_1"
+                            }
                         },
-                        # {
-                        #     "title": "SECTION_2_TITLE",
-                        #     "rows": [
-                        #         {
-                        #             "id": "SECTION_2_ROW_1_ID",
-                        #             "title": "SECTION_2_ROW_1_TITLE",
-                        #             "description": "SECTION_2_ROW_1_DESCRIPTION"
-                        #         },
-                        #         {
-                        #             "id": "SECTION_2_ROW_2_ID",
-                        #             "title": "SECTION_2_ROW_2_TITLE",
-                        #             "description": "SECTION_2_ROW_2_DESCRIPTION"
-                        #         }
-                        #     ]
-                        # }
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "UNIQUE_BUTTON_ID_2",
+                                "title": "BUTTON_TITLE_2"
+                            }
+                        }
                     ]
                 }
             }

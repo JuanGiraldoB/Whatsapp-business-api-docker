@@ -37,7 +37,7 @@ async def webhook_whatsapp():
         body = request.json
 
     # Check the Incoming webhook message
-    app.logger.info(json.dumps(body, indent=2))
+    # app.logger.info(json.dumps(body, indent=2))
 
     if 'object' in body:
         if (
@@ -45,11 +45,13 @@ async def webhook_whatsapp():
             body['entry'][0].get('changes') and
             body['entry'][0]['changes'][0].get('value') and
             body['entry'][0]['changes'][0]['value'].get('messages') and
-            body['entry'][0]['changes'][0]['value']['messages'][0]
+            body['entry'][0]['changes'][0]['value']['messages'][0] == "agendar"
         ):
             phone_number_id = body['entry'][0]['changes'][0]['value']['metadata']['phone_number_id']
             from_number = body['entry'][0]['changes'][0]['value']['messages'][0]['from']
             msg_body = body['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
+
+            app.logger.info(msg_body)
 
             # Make a POST request to send a message back
             url = f"https://graph.facebook.com/v12.0/{phone_number_id}/messages?access_token={config['VERIFY_TOKEN']}"

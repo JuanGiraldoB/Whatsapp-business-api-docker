@@ -20,7 +20,6 @@ config = {
 }
 
 app.config.update(config)
-print(app.config)
 
 
 @app.route("/webhook/", methods=["POST", "GET"])
@@ -32,6 +31,18 @@ def webhook_whatsapp():
             return request.args.get('hub.challenge')
         return "Authentication failed. Invalid Token."
 
+    # RECIBIMOS TODOS LOS DATOS ENVIADO VIA JSON
+    data = request.get_json()
+    # EXTRAEMOS EL NUMERO DE TELEFONO Y EL MANSAJE
+    mensaje = "Telefono:" + \
+        data['entry'][0]['changes'][0]['value']['messages'][0]['from']
+    mensaje = mensaje+"|Mensaje:" + \
+        data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
+    # ESCRIBIMOS EL NUMERO DE TELEFONO Y EL MENSAJE EN EL ARCHIVO TEXTO
+    f = open("texto.txt", "w")
+    f.write(mensaje)
+    f.close()
+    # RETORNAMOS EL STATUS EN UN JSON
     return jsonify({"status": "success"}, 200)
 
 

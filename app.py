@@ -23,7 +23,7 @@ app.config.update(config)
 
 
 @app.route("/webhook/", methods=["POST", "GET"])
-def webhook_whatsapp():
+async def webhook_whatsapp():
     """__summary__: Get message from the webhook"""
 
     print(request)
@@ -32,8 +32,16 @@ def webhook_whatsapp():
             return request.args.get('hub.challenge')
         return "Authentication failed. Invalid Token."
 
+    elif request.method == "POST":
+        print(data)
+        # data = request.get_json()
+        data = get_text_message_input(
+            app.config['RECIPIENT_WAID'], 'Welcome to the Flight Confirmation Demo App for Python!')
+        await send_message(data)
+        return jsonify({"status": "success"}, 200)
+        # return flask.redirect(flask.url_for('index'))
+
     # RECIBIMOS TODOS LOS DATOS ENVIADO VIA JSON
-    data = request.get_json()
     # EXTRAEMOS EL NUMERO DE TELEFONO Y EL MANSAJE
     # mensaje = "Telefono:" + \
     #     data['entry'][0]['changes'][0]['value']['messages'][0]['from']
@@ -43,15 +51,10 @@ def webhook_whatsapp():
     # f = open("texto.txt", "w")
     # f.write(data)
     # f.close()
-    print(data)
-    print(request)
-    print("something")
-    data = get_text_message_input(
-        app.config['RECIPIENT_WAID'], 'Welcome to the Flight Confirmation Demo App for Python!')
-    send_message(data)
+    # print(data)
+    # print(request)
+    # print("something")
     # RETORNAMOS EL STATUS EN UN JSON
-    # return jsonify({"status": "success"}, 200)
-    return flask.redirect(flask.url_for('index'))
 
 
 @app.route("/")

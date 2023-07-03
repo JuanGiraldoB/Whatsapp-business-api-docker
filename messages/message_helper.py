@@ -73,47 +73,47 @@ def get_text_message_input(recipient, text):
                 "type": "list",
                 "header": {
                     "type": "text",
-                    "text": "HEADER_TEXT"
+                    "text": "Amorcito"
                 },
                 "body": {
-                    "text": "BODY_TEXT"
+                    "text": "Te amo muchote"
                 },
                 "footer": {
-                    "text": "FOOTER_TEXT"
+                    "text": "Tu solecito"
                 },
                 "action": {
-                    "button": "BUTTON_TEXT",
+                    "button": "No funcino :(",
                     "sections": [
                         {
-                            "title": "SECTION_1_TITLE",
+                            "title": "Me amas?",
                             "rows": [
                                 {
                                     "id": "SECTION_1_ROW_1_ID",
-                                    "title": "SECTION_1_ROW_1_TITLE",
-                                    "description": "SECTION_1_ROW_1_DESCRIPTION"
+                                    "title": "No",
+                                    "description": "Toy tiste :("
                                 },
                                 {
                                     "id": "SECTION_1_ROW_2_ID",
-                                    "title": "SECTION_1_ROW_2_TITLE",
-                                    "description": "SECTION_1_ROW_2_DESCRIPTION"
+                                    "title": "Shi",
+                                    "description": "Toy feliz :)"
                                 }
                             ]
                         },
-                        {
-                            "title": "SECTION_2_TITLE",
-                            "rows": [
-                                {
-                                    "id": "SECTION_2_ROW_1_ID",
-                                    "title": "SECTION_2_ROW_1_TITLE",
-                                    "description": "SECTION_2_ROW_1_DESCRIPTION"
-                                },
-                                {
-                                    "id": "SECTION_2_ROW_2_ID",
-                                    "title": "SECTION_2_ROW_2_TITLE",
-                                    "description": "SECTION_2_ROW_2_DESCRIPTION"
-                                }
-                            ]
-                        }
+                        # {
+                        #     "title": "SECTION_2_TITLE",
+                        #     "rows": [
+                        #         {
+                        #             "id": "SECTION_2_ROW_1_ID",
+                        #             "title": "SECTION_2_ROW_1_TITLE",
+                        #             "description": "SECTION_2_ROW_1_DESCRIPTION"
+                        #         },
+                        #         {
+                        #             "id": "SECTION_2_ROW_2_ID",
+                        #             "title": "SECTION_2_ROW_2_TITLE",
+                        #             "description": "SECTION_2_ROW_2_DESCRIPTION"
+                        #         }
+                        #     ]
+                        # }
                     ]
                 }
             }

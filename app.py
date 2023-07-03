@@ -38,7 +38,7 @@ async def webhook_whatsapp():
         return "Invalid message."
 
     message = get_text_message_input(
-        app.config['RECIPIENT_WAID'], 'Welcome to the Flight Confirmation Demo App for Python!')
+        app.config['RECIPIENT_WAID'])
     await send_message(message)
 
     return jsonify({'status': 'success'}), 200

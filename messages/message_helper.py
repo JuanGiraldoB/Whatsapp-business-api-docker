@@ -19,7 +19,7 @@ def is_message_valid(data: dict):
     if not data['entry'][0]['changes'][0]['value'].get('messages'):
         return False
 
-    if not data['entry'][0]['changes'][0]['value']['messages'][0]:
+    if data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'] != "agenda":
         return False
 
     return True
@@ -49,7 +49,7 @@ async def send_message(data):
             print('Connection Error', str(e))
 
 
-def get_text_message_input(recipient, text):
+def get_text_message_input(recipient):
     # return json.dumps({
     #     "messaging_product": "whatsapp",
     #     "preview_url": False,
@@ -127,22 +127,22 @@ def get_text_message_input(recipient, text):
             "interactive": {
                 "type": "button",
                 "body": {
-                    "text": "BUTTON_TEXT"
+                    "text": "Desea..."
                 },
                 "action": {
                     "buttons": [
                         {
                             "type": "reply",
                             "reply": {
-                                "id": "UNIQUE_BUTTON_ID_1",
-                                "title": "BUTTON_TITLE_1"
+                                "id": "crear_evento",
+                                "title": "Crear evento"
                             }
                         },
                         {
                             "type": "reply",
                             "reply": {
-                                "id": "UNIQUE_BUTTON_ID_2",
-                                "title": "BUTTON_TITLE_2"
+                                "id": "ver_agenda",
+                                "title": "Ver agenda"
                             }
                         }
                     ]

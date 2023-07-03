@@ -56,17 +56,21 @@ async def webhook_whatsapp():
 
             app.logger.info(msg_body)
 
+            data = get_text_message_input(
+                app.config['RECIPIENT_WAID'], 'Welcome to the Flight Confirmation Demo App for Python!')
+            await send_message(data)
+
             # Make a POST request to send a message back
-            url = f"https://graph.facebook.com/v12.0/{phone_number_id}/messages?access_token={config['VERIFY_TOKEN']}"
-            data = {
-                'messaging_product': 'whatsapp',
-                'to': from_number,
-                'text': {'body': f"Ack: {msg_body}"}
-            }
-            headers = {'Content-Type': 'application/json'}
-            response = requests.post(url, json=data, headers=headers)
-            if response.status_code == 200:
-                print("Message sent successfully")
+            # url = f"https://graph.facebook.com/v12.0/{phone_number_id}/messages?access_token={config['VERIFY_TOKEN']}"
+            # data = {
+            #     'messaging_product': 'whatsapp',
+            #     'to': from_number,
+            #     'text': {'body': f"Ack: {msg_body}"}
+            # }
+            # headers = {'Content-Type': 'application/json'}
+            # response = requests.post(url, json=data, headers=headers)
+            # if response.status_code == 200:
+            #     print("Message sent successfully")
 
     return jsonify({'status': 'success'}), 200
 

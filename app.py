@@ -23,7 +23,7 @@ app.config.update(config)
 
 
 @app.route("/webhook/", methods=["POST", "GET"])
-async def webhook_whatsapp():
+def webhook_whatsapp():
     """__summary__: Get message from the webhook"""
 
     print(request)
@@ -48,7 +48,7 @@ async def webhook_whatsapp():
     print("something")
     data = get_text_message_input(
         app.config['RECIPIENT_WAID'], 'Welcome to the Flight Confirmation Demo App for Python!')
-    await send_message(data)
+    send_message(data)
     # RETORNAMOS EL STATUS EN UN JSON
     # return jsonify({"status": "success"}, 200)
     return flask.redirect(flask.url_for('index'))

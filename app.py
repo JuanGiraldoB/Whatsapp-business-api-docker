@@ -41,7 +41,8 @@ async def webhook_whatsapp():
         #         app.config['RECIPIENT_WAID'], 'Welcome to the Flight Confirmation Demo App for Python!')
         #     await send_message(data)
 
-        return jsonify({"status": "success"}, 200)
+        return jsonify({"status": "success",
+                        "data": data}, 200)
         # return flask.redirect(flask.url_for('index'))
 
     # RECIBIMOS TODOS LOS DATOS ENVIADO VIA JSON

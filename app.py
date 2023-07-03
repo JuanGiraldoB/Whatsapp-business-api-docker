@@ -33,11 +33,12 @@ async def webhook_whatsapp():
             return request.args.get('hub.challenge')
         return "Authentication failed. Invalid Token."
 
-    elif request.method == "POST":
-        body = request.json
+    body = request.json
 
     # Check the Incoming webhook message
     # app.logger.info(json.dumps(body, indent=2))
+
+    app.logger.info(body['entry'][0]['changes'][0]['value']['messages'][0])
 
     if 'object' in body:
         if (

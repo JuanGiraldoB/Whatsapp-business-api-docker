@@ -1,7 +1,7 @@
 import json
 from flask import Flask, render_template, request, jsonify
 import flask
-from messages.message_helper import get_text_message_input, send_message, is_message_valid
+from messages.message_helper import get_text_message_input, send_message, is_message
 from dotenv import load_dotenv
 import os
 import requests
@@ -34,8 +34,10 @@ async def webhook_whatsapp():
 
     data = request.json
 
-    if not is_message_valid(data):
-        return "Invalid message."
+    if not is_message(data):
+        message = get_text_message_input(
+            app.config['RECIPIENT_WAID'], False)
+        await send_message(message)
 
     message = get_text_message_input(
         app.config['RECIPIENT_WAID'])

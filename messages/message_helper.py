@@ -3,7 +3,7 @@ import json
 from flask import current_app
 
 
-def is_message_valid(data: dict):
+def is_message(data: dict):
     if 'object' not in data:
         return False
 
@@ -19,7 +19,7 @@ def is_message_valid(data: dict):
     if not data['entry'][0]['changes'][0]['value'].get('messages'):
         return False
 
-    if data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'] != "agenda":
+    if not data['entry'][0]['changes'][0]['value']['messages'][0]:
         return False
 
     return True
@@ -49,17 +49,52 @@ async def send_message(data):
             print('Connection Error', str(e))
 
 
-def get_text_message_input(recipient):
-    # return json.dumps({
-    #     "messaging_product": "whatsapp",
-    #     "preview_url": False,
-    #     "recipient_type": "individual",
-    #     "to": recipient,
-    #     "type": "text",
-    #     "text": {
-    #         "body": text
-    #     }
-    # })
+def get_text_message_input(recipient, valid_message):
+
+    if valid_message:
+        return json.dumps(
+            {
+                "messaging_product": "whatsapp",
+                "recipient_type": "individual",
+                "to": recipient,
+                "type": "interactive",
+                "interactive": {
+                    "type": "button",
+                    "body": {
+                        "text": "Desea..."
+                    },
+                    "action": {
+                        "buttons": [
+                            {
+                                "type": "reply",
+                                "reply": {
+                                    "id": "crear_evento",
+                                    "title": "Crear evento"
+                                }
+                            },
+                            {
+                                "type": "reply",
+                                "reply": {
+                                    "id": "ver_agenda",
+                                    "title": "Ver agenda"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        )
+
+    return json.dumps({
+        "messaging_product": "whatsapp",
+        "preview_url": False,
+        "recipient_type": "individual",
+        "to": recipient,
+        "type": "text",
+        "text": {
+            "body": "Mensaje invalido"
+        }
+    })
 
     # return json.dumps(
     #     {
@@ -117,36 +152,3 @@ def get_text_message_input(recipient):
     #         }
     #     }
     # )
-
-    return json.dumps(
-        {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": recipient,
-            "type": "interactive",
-            "interactive": {
-                "type": "button",
-                "body": {
-                    "text": "Desea..."
-                },
-                "action": {
-                    "buttons": [
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "crear_evento",
-                                "title": "Crear evento"
-                            }
-                        },
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "ver_agenda",
-                                "title": "Ver agenda"
-                            }
-                        }
-                    ]
-                }
-            }
-        }
-    )

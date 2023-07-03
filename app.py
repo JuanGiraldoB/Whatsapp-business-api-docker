@@ -4,6 +4,7 @@ import flask
 from messages.message_helper import get_text_message_input, send_message
 from dotenv import load_dotenv
 import os
+import requests
 
 app = Flask(__name__)
 
@@ -33,17 +34,36 @@ async def webhook_whatsapp():
         return "Authentication failed. Invalid Token."
 
     elif request.method == "POST":
-        data = request.get_json()
-        print("data", data)
+        body = request.json
 
-        # if data:
-        #     data = get_text_message_input(
-        #         app.config['RECIPIENT_WAID'], 'Welcome to the Flight Confirmation Demo App for Python!')
-        #     await send_message(data)
+    # Check the Incoming webhook message
+    print(json.dumps(body, indent=2))
 
-        return jsonify({"status": "success",
-                        "data": data}, 200)
-        # return flask.redirect(flask.url_for('index'))
+    if 'object' in body:
+        if (
+            'entry' in body and
+            body['entry'][0].get('changes') and
+            body['entry'][0]['changes'][0].get('value') and
+            body['entry'][0]['changes'][0]['value'].get('messages') and
+            body['entry'][0]['changes'][0]['value']['messages'][0]
+        ):
+            phone_number_id = body['entry'][0]['changes'][0]['value']['metadata']['phone_number_id']
+            from_number = body['entry'][0]['changes'][0]['value']['messages'][0]['from']
+            msg_body = body['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
+
+            # Make a POST request to send a message back
+            url = f"https://graph.facebook.com/v12.0/{phone_number_id}/messages?access_token={config['VERIFY_TOKEN']}"
+            data = {
+                'messaging_product': 'whatsapp',
+                'to': from_number,
+                'text': {'body': f"Ack: {msg_body}"}
+            }
+            headers = {'Content-Type': 'application/json'}
+            response = requests.post(url, json=data, headers=headers)
+            if response.status_code == 200:
+                print("Message sent successfully")
+
+    return jsonify({'status': 'success'}), 200
 
     # RECIBIMOS TODOS LOS DATOS ENVIADO VIA JSON
     # EXTRAEMOS EL NUMERO DE TELEFONO Y EL MANSAJE

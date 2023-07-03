@@ -26,7 +26,7 @@ app.config.update(config)
 async def webhook_whatsapp():
     """__summary__: Get message from the webhook"""
 
-    print(request)
+    print("sakdfmaskdmfaskd", request)
     if request.method == "GET":
         if request.args.get('hub.verify_token') == config["VERIFY_TOKEN"]:
             return request.args.get('hub.challenge')
@@ -34,7 +34,7 @@ async def webhook_whatsapp():
 
     elif request.method == "POST":
         data = request.get_json()
-        print(data)
+        print("data", data)
 
         if data:
             data = get_text_message_input(

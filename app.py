@@ -26,6 +26,7 @@ app.config.update(config)
 def webhook_whatsapp():
     """__summary__: Get message from the webhook"""
 
+    print(request)
     if request.method == "GET":
         if request.args.get('hub.verify_token') == config["VERIFY_TOKEN"]:
             return request.args.get('hub.challenge')

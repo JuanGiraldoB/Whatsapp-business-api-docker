@@ -38,8 +38,8 @@ async def webhook_whatsapp():
     # Check the Incoming webhook message
     # app.logger.info(json.dumps(body, indent=2))
 
-    app.logger.info(body['entry'][0]['changes'][0]
-                    ['value']['messages'][0]['text']['body'])
+    # app.logger.info(body['entry'][0]['changes'][0]
+    #                 ['value']['messages'][0]['text']['body'])
 
     if 'object' in body:
         if (
@@ -47,7 +47,8 @@ async def webhook_whatsapp():
             body['entry'][0].get('changes') and
             body['entry'][0]['changes'][0].get('value') and
             body['entry'][0]['changes'][0]['value'].get('messages') and
-            body['entry'][0]['changes'][0]['value']['messages'][0] == "agendar"
+            body['entry'][0]['changes'][0]
+            ['value']['messages'][0]['text']['body'] == "agendar"
         ):
             phone_number_id = body['entry'][0]['changes'][0]['value']['metadata']['phone_number_id']
             from_number = body['entry'][0]['changes'][0]['value']['messages'][0]['from']

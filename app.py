@@ -34,12 +34,13 @@ async def webhook_whatsapp():
 
     elif request.method == "POST":
         data = request.get_json()
+        print(data)
 
         if data:
             data = get_text_message_input(
                 app.config['RECIPIENT_WAID'], 'Welcome to the Flight Confirmation Demo App for Python!')
             await send_message(data)
-            print(data)
+
         return jsonify({"status": "success"}, 200)
         # return flask.redirect(flask.url_for('index'))
 

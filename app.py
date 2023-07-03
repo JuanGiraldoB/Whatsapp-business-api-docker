@@ -38,7 +38,8 @@ async def webhook_whatsapp():
     # Check the Incoming webhook message
     # app.logger.info(json.dumps(body, indent=2))
 
-    app.logger.info(body['entry'][0]['changes'][0]['value']['messages'][0])
+    app.logger.info(body['entry'][0]['changes'][0]
+                    ['value']['messages'][0]['text']['body'])
 
     if 'object' in body:
         if (

@@ -43,6 +43,8 @@ def webhook_whatsapp():
     # f.write(data)
     # f.close()
     print(data)
+    print(request)
+    print("something")
     # RETORNAMOS EL STATUS EN UN JSON
     return jsonify({"status": "success"}, 200)
 

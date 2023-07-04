@@ -26,6 +26,7 @@ def exists_message(data: dict):
 
 
 def get_message(data):
+    current_app.logger.info(data)
     return data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
 
 

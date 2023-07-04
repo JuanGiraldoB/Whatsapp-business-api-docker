@@ -3,7 +3,7 @@ import json
 from flask import current_app
 
 
-def is_message(data: dict):
+def exists_message(data: dict):
     if 'object' not in data:
         return False
 
@@ -23,6 +23,11 @@ def is_message(data: dict):
         return False
 
     return True
+
+
+def is_valid_message(msg):
+    valid_msgs = ["Agenda", "Crear evento", "Ver agenda"]
+    return msg is valid_msgs
 
 
 async def send_message(data):

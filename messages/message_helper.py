@@ -37,7 +37,7 @@ def get_message(data):
 
 
 def get_message_type(data):
-    if data['entry'][0]['changes'][0]['value']['messages'][0]['interactive']:
+    if 'interactive' in data['entry'][0]['changes'][0]['value']['messages'][0]:
         return "interactive"
 
     return "text"

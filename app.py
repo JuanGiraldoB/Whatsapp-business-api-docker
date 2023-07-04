@@ -1,10 +1,10 @@
 import json
-from flask import Flask, render_template, request, jsonify
-import flask
+import requests
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 from messages.message_helper import get_text_message_input, send_message, is_message
 from dotenv import load_dotenv
 import os
-import requests
+from routes import routes_bp
 
 app = Flask(__name__)
 
@@ -21,43 +21,7 @@ config = {
 }
 
 app.config.update(config)
-
-
-@app.route("/webhook/", methods=["POST", "GET"])
-async def webhook_whatsapp():
-    """__summary__: Get message from the webhook"""
-
-    if request.method == "GET":
-        if request.args.get('hub.verify_token') == config["VERIFY_TOKEN"]:
-            return request.args.get('hub.challenge')
-        return "Authentication failed. Invalid Token."
-
-    data = request.json
-
-    if not is_message(data):
-        message = get_text_message_input(
-            app.config['RECIPIENT_WAID'], False)
-        await send_message(message)
-
-    message = get_text_message_input(
-        app.config['RECIPIENT_WAID'])
-    await send_message(message)
-
-    return jsonify({'status': 'success'}), 200
-
-
-@app.route("/")
-def index():
-    return render_template('index.html', name=__name__)
-
-
-@app.route('/welcome', methods=['POST'])
-async def welcome():
-    data = get_text_message_input(
-        app.config['RECIPIENT_WAID'], 'Welcome to the Flight Confirmation Demo App for Python!')
-    await send_message(data)
-    return flask.redirect(flask.url_for('index'))
-
+app.register_blueprint(routes_bp)
 
 if __name__ == "__main__":
     app.run(debug=True)

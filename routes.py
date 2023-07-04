@@ -18,7 +18,7 @@ async def webhook_whatsapp():
         return "Authentication failed. Invalid Token."
 
     data = request.json
-
+#
     if not exists_message(data):
         message = get_text_message_input(
             current_app.config['RECIPIENT_WAID'], False)

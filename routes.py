@@ -7,8 +7,6 @@ routes_bp = Blueprint('routes', __name__)
 
 @routes_bp.route("/webhook/", methods=["POST", "GET"])
 async def webhook_whatsapp():
-    """__summary__: Get message from the webhook"""
-
     if request.method == "GET":
         if request.args.get('hub.verify_token') == current_app.config["VERIFY_TOKEN"]:
             return request.args.get('hub.challenge')
@@ -22,7 +20,7 @@ async def webhook_whatsapp():
         await send_message(message)
 
     message = get_text_message_input(
-        current_app.config['RECIPIENT_WAID'])
+        current_app.config['RECIPIENT_WAID'], True)
     await send_message(message)
 
     return jsonify({'status': 'success'}), 200

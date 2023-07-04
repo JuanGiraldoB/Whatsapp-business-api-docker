@@ -25,9 +25,12 @@ async def webhook_whatsapp():
         # await send_message(message)
         return "Authentication failed. Invalid Token."
 
-    message = get_text_message_input(
-        current_app.config['RECIPIENT_WAID'], True)
-    await send_message(message)
+    msg = get_message(data)
+
+    if is_valid_message(msg):
+        message = get_text_message_input(
+            current_app.config['RECIPIENT_WAID'], True)
+        await send_message(message)
 
     return jsonify({'status': 'success'}), 200
 

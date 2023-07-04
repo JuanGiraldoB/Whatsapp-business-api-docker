@@ -25,9 +25,13 @@ def exists_message(data: dict):
     return True
 
 
+def get_message(data):
+    return data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
+
+
 def is_valid_message(msg):
     valid_msgs = ["Agenda", "Crear evento", "Ver agenda"]
-    return msg is valid_msgs
+    return msg in valid_msgs
 
 
 async def send_message(data):

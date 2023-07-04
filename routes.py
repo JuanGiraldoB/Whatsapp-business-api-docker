@@ -1,6 +1,11 @@
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, current_app
-from messages.message_helper import get_text_message_input, send_message, exists_message
-
+from messages.message_helper import (
+    get_text_message_input,
+    send_message,
+    exists_message,
+    is_valid_message,
+    get_message
+)
 # Create a Blueprint object
 routes_bp = Blueprint('routes', __name__)
 
@@ -19,9 +24,12 @@ async def webhook_whatsapp():
             current_app.config['RECIPIENT_WAID'], False)
         await send_message(message)
 
-    message = get_text_message_input(
-        current_app.config['RECIPIENT_WAID'], True)
-    await send_message(message)
+    msg = get_message(data)
+
+    if is_valid_message(msg):
+        message = get_text_message_input(
+            current_app.config['RECIPIENT_WAID'], True)
+        await send_message(message)
 
     return jsonify({'status': 'success'}), 200
 

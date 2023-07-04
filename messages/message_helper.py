@@ -27,7 +27,20 @@ def exists_message(data: dict):
 
 def get_message(data):
     current_app.logger.info(data)
+
+    msg_type = get_message_type(data)
+
+    if msg_type == "interactive":
+        return data['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['title']
+
     return data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
+
+
+def get_message_type(data):
+    if data['entry'][0]['changes'][0]['value']['messages'][0]['interactive']:
+        return "interactive"
+
+    return "text"
 
 
 def is_valid_message(msg):

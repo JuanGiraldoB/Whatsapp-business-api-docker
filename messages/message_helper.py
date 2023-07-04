@@ -72,9 +72,9 @@ async def send_message(data):
             print('Connection Error', str(e))
 
 
-def get_text_message_input(recipient, valid_message):
+def get_text_message_input(recipient, msg):
 
-    if valid_message:
+    if msg == "Agenda":
         return json.dumps(
             {
                 "messaging_product": "whatsapp",
@@ -107,6 +107,30 @@ def get_text_message_input(recipient, valid_message):
                 }
             }
         )
+
+    if msg == "Crear evento":
+        return json.dumps({
+            "messaging_product": "whatsapp",
+            "preview_url": False,
+            "recipient_type": "individual",
+            "to": recipient,
+            "type": "text",
+            "text": {
+                "body": "crando evento.."
+            }
+        })
+
+    if msg == "Ver agenda":
+        return json.dumps({
+            "messaging_product": "whatsapp",
+            "preview_url": False,
+            "recipient_type": "individual",
+            "to": recipient,
+            "type": "text",
+            "text": {
+                "body": "viendo agenda.."
+            }
+        })
 
     return json.dumps({
         "messaging_product": "whatsapp",

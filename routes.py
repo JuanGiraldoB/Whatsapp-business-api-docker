@@ -7,6 +7,7 @@ from messages.message_helper import (
     get_message
 )
 from sheets.sheets_helper import add_expense, get_total_expenses
+import json
 
 # Create a Blueprint object
 routes_bp = Blueprint('routes', __name__)
@@ -42,7 +43,9 @@ async def webhook_whatsapp():
 
     if 'Ver gastos' in msg:
         total_expenses = get_total_expenses()
-        message['text']['body'] = f'Gastos totales: {total_expenses}'
+        message_dict = json.loads(message)
+        message_dict['text']['body'] = f'Gastos totales: {total_expenses}'
+        message = json.dumps(message_dict)
 
     await send_message(message)
 

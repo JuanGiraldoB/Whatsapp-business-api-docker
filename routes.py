@@ -42,8 +42,6 @@ async def webhook_whatsapp():
         current_app.config['RECIPIENT_WAID'], msg)
     await send_message(message)
 
-    add_expense()
-
     current_app.logger.info("msg was sent:", message)
 
     return jsonify({'status': 'success'}), 200

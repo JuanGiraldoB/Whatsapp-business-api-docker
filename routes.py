@@ -34,8 +34,8 @@ async def webhook_whatsapp():
 
     if 'agregar' in msg:
         message_parts = msg.split(" ")
-        amount, message = message_parts
-        current_app.logger.info("Adding expense: %s", message)
+        amount, msg = message_parts
+        current_app.logger.info("Adding expense: %s", msg)
         add_expense(amount)
 
     message = get_text_message_input(

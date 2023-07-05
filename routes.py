@@ -36,7 +36,7 @@ async def webhook_whatsapp():
         message_parts = msg.split(" ")
         amount, msg = message_parts
         current_app.logger.info("Adding expense: %s", msg)
-        add_expense(amount)
+        add_expense(int(amount))
 
     message = get_text_message_input(
         current_app.config['RECIPIENT_WAID'], msg)

@@ -138,7 +138,7 @@ def get_text_message_input(recipient, msg):
             "to": recipient,
             "type": "text",
             "text": {
-                "body": "viendo gastos.."
+                "body": ""
             }
         })
 

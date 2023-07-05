@@ -6,8 +6,7 @@ from messages.message_helper import (
     is_valid_message,
     get_message
 )
-from sheets.sheets_helper import add_expense
-import gspread
+from sheets.sheets_helper import add_expense, get_total_expenses
 
 # Create a Blueprint object
 routes_bp = Blueprint('routes', __name__)
@@ -40,6 +39,11 @@ async def webhook_whatsapp():
 
     message = get_text_message_input(
         current_app.config['RECIPIENT_WAID'], msg)
+
+    if 'Ver gastos' in msg:
+        total_expenses = get_total_expenses()
+        message['text']['body'] = f'Gastos totales: {total_expenses}'
+
     await send_message(message)
 
     current_app.logger.info("msg was sent: %s", message)

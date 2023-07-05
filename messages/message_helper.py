@@ -44,7 +44,7 @@ def get_message_type(data):
 
 
 def is_valid_message(msg):
-    valid_msgs = ["Agenda", "Crear evento", "Ver agenda"]
+    valid_msgs = ["Gastos", "Agregar gasto", "Ver gastos"]
     return msg in valid_msgs
 
 
@@ -74,7 +74,7 @@ async def send_message(data):
 
 def get_text_message_input(recipient, msg):
 
-    if msg == "Agenda":
+    if msg == "Gastos":
         return json.dumps(
             {
                 "messaging_product": "whatsapp",
@@ -91,15 +91,15 @@ def get_text_message_input(recipient, msg):
                             {
                                 "type": "reply",
                                 "reply": {
-                                    "id": "crear_evento",
-                                    "title": "Crear evento"
+                                    "id": "agregar_gasto",
+                                    "title": "Agregar gasto"
                                 }
                             },
                             {
                                 "type": "reply",
                                 "reply": {
-                                    "id": "ver_agenda",
-                                    "title": "Ver agenda"
+                                    "id": "ver_gastos",
+                                    "title": "Ver gastos"
                                 }
                             }
                         ]
@@ -108,7 +108,7 @@ def get_text_message_input(recipient, msg):
             }
         )
 
-    if msg == "Crear evento":
+    if msg == "Agregar gasto":
         return json.dumps({
             "messaging_product": "whatsapp",
             "preview_url": False,
@@ -116,11 +116,11 @@ def get_text_message_input(recipient, msg):
             "to": recipient,
             "type": "text",
             "text": {
-                "body": "crando evento.."
+                "body": "Agregando.."
             }
         })
 
-    if msg == "Ver agenda":
+    if msg == "Ver gastos":
         return json.dumps({
             "messaging_product": "whatsapp",
             "preview_url": False,
@@ -128,7 +128,7 @@ def get_text_message_input(recipient, msg):
             "to": recipient,
             "type": "text",
             "text": {
-                "body": "viendo agenda.."
+                "body": "viendo gastos.."
             }
         })
 

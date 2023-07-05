@@ -6,6 +6,7 @@ from messages.message_helper import (
     is_valid_message,
     get_message
 )
+from sheets.sheets_helper import add_expense
 import gspread
 
 # Create a Blueprint object
@@ -22,37 +23,20 @@ async def webhook_whatsapp():
     data = request.json
 
     if not exists_message(data):
-        # message = get_text_message_input(
-        #     current_app.config['RECIPIENT_WAID'], False)
-        # await send_message(message)
         current_app.logger.info("exists message, not sent")
-        return "Authentication failed. Invalid Token."
+        return "Message does not exists."
 
     msg = get_message(data)
 
     if not is_valid_message(msg):
         current_app.logger.info("is valid message, not valid:", msg)
-        return "Authentication failed. Invalid Token."
+        return "Invalid message."
 
     message = get_text_message_input(
         current_app.config['RECIPIENT_WAID'], msg)
     await send_message(message)
 
-    sa = gspread.service_account(filename="service_account.json")
-    sh = sa.open("Accounting")
-
-    wks = sh.worksheet("Deudas")
-
-    # print("Rows: ", wks.row_count)
-    # print("Cols: ", wks.col_count)
-
-    # print(wks.acell('A2').value)
-    # print(wks.get("A1:D5"))
-
-    # print(wks.get_all_records())
-    # print(wks.get_all_values())
-
-    wks.update('A22', 'hola')
+    add_expense()
 
     current_app.logger.info("msg was sent:", message)
 

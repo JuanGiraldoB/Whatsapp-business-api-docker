@@ -44,7 +44,7 @@ def get_message_type(data):
 
 
 def is_valid_message(msg):
-    valid_msgs = ["Gastos", "Agregar gasto", "Ver gastos"]
+    valid_msgs = ["Gastos", "Agregar gasto", "Ver gastos", "agregar"]
     return msg in valid_msgs
 
 
@@ -116,7 +116,19 @@ def get_text_message_input(recipient, msg):
             "to": recipient,
             "type": "text",
             "text": {
-                "body": "Agregando.."
+                "body": "Para agregar un gasto, digite la cantidad, seguido de la palabra 'agregar', Por ejemplo: xxxxxxx agregar"
+            }
+        })
+
+    if msg == "agregar":
+        return json.dumps({
+            "messaging_product": "whatsapp",
+            "preview_url": False,
+            "recipient_type": "individual",
+            "to": recipient,
+            "type": "text",
+            "text": {
+                "body": "Agregado correctamente."
             }
         })
 

@@ -32,6 +32,12 @@ async def webhook_whatsapp():
         current_app.logger.info("is valid message, not valid:", msg)
         return "Invalid message."
 
+    if 'agregar' in msg:
+        message_parts = msg.split(" ")
+        amount, message = message_parts
+        current_app.logger.info("Adding expense")
+        add_expense(amount)
+
     message = get_text_message_input(
         current_app.config['RECIPIENT_WAID'], msg)
     await send_message(message)

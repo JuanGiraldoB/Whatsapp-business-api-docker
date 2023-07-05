@@ -2,7 +2,7 @@ import gspread
 from datetime import datetime
 
 
-def add_expense():
+def add_expense(amount):
     # sa = gspread.service_account(filename="../service_account.json")
     sa = gspread.service_account(filename="/etc/secrets/service_account.json")
     spreadsheet = sa.open("Accounting")
@@ -11,6 +11,6 @@ def add_expense():
     date = datetime.now().date()
     date = date.strftime('%m/%d/%Y')
 
-    data = ("dasdas", date)
+    data = ("amount", date)
 
     working_spread_sheet.append_row(data)

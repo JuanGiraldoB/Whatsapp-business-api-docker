@@ -11,6 +11,6 @@ def add_expense(amount):
     date = datetime.now().date()
     date = date.strftime('%m/%d/%Y')
 
-    data = ("amount", date)
+    data = (amount, date)
 
     working_spread_sheet.append_row(data)

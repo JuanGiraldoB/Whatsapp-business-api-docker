@@ -44,8 +44,8 @@ def get_message_type(data):
 
 
 def is_valid_message(msg):
-    valid_msgs = ["Gastos", "Agregar gasto", "Ver gastos", "agregar"]
-    return msg in valid_msgs
+    valid_msgs = ["Gastos", "Agregar gasto", "Ver gastos"]
+    return msg in valid_msgs or "agregar" in msg
 
 
 async def send_message(data):

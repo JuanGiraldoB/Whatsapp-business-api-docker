@@ -6,6 +6,8 @@ from messages.message_helper import (
     is_valid_message,
     get_message
 )
+import gspread
+
 # Create a Blueprint object
 routes_bp = Blueprint('routes', __name__)
 
@@ -35,6 +37,22 @@ async def webhook_whatsapp():
     message = get_text_message_input(
         current_app.config['RECIPIENT_WAID'], msg)
     await send_message(message)
+
+    sa = gspread.service_account(filename="service_account.json")
+    sh = sa.open("Accounting")
+
+    wks = sh.worksheet("Deudas")
+
+    # print("Rows: ", wks.row_count)
+    # print("Cols: ", wks.col_count)
+
+    # print(wks.acell('A2').value)
+    # print(wks.get("A1:D5"))
+
+    # print(wks.get_all_records())
+    # print(wks.get_all_values())
+
+    wks.update('A22', 'hola')
 
     current_app.logger.info("msg was sent:", message)
 

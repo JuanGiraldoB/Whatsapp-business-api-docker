@@ -26,8 +26,6 @@ def exists_message(data: dict):
 
 
 def get_message(data):
-    current_app.logger.info(data)
-
     msg_type = get_message_type(data)
 
     if msg_type == "interactive":

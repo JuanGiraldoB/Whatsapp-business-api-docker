@@ -32,6 +32,8 @@ async def webhook_whatsapp():
         current_app.logger.info("is valid message, not valid:", msg)
         return "Invalid message."
 
+    current_app.logger.info(msg)
+
     if 'agregar' in msg:
         message_parts = msg.split(" ")
         amount, message = message_parts

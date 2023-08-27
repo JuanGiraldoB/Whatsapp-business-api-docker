@@ -73,12 +73,6 @@ async def send_message(data):
 
 def get_text_message_input(recipient, msg):
     response_data = RESPONSE_MAP.get(msg, RESPONSE_MAP['default'])
-    response_data.update({
-        "messaging_product": "whatsapp",
-        "preview_url": False,
-        "recipient_type": "individual",
-        "to": recipient
-    })
 
     # return json.dumps({
     #         "messaging_product": "whatsapp",
@@ -92,10 +86,10 @@ def get_text_message_input(recipient, msg):
     #     })
 
     return json.dumps({
-        "messaging_product": response_data['messaging_product'],
-        'preview_url': response_data['preview_url'],
-        'recipient_type': response_data['recipient_type'],
-        'to': response_data['to'],
+        "messaging_product": "whatsapp",
+        "preview_url": False,
+        "recipient_type": "individual",
+        "to": recipient,
         "type": response_data["type"],
         "text": response_data["text"]
     })

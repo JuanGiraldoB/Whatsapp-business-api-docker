@@ -48,7 +48,7 @@ async def webhook_whatsapp():
     message = get_text_message_input(
         current_app.config['RECIPIENT_WAID'], msg)
 
-    if 'borrar' in msg:
+    if 'Borrar' in msg:
         expense_manager.delete_expenses()
         current_app.logger.info("Deleted expenses")
 

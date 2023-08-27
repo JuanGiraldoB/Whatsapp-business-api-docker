@@ -20,6 +20,10 @@ RESPONSE_MAP = {
         "type": "text",
         "text": {"body": "Para agregar un gasto, digite la cantidad, seguido de la palabra 'agregar', Por ejemplo: xxxxxxx agregar"}
     },
+    "Borrar": {
+        "type": "text",
+        "text": {"body": "Se han borrado los datos correctamente."}
+    },
     "agregar": {
         "type": "text",
         "text": {"body": "Agregado correctamente."}

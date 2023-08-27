@@ -43,7 +43,7 @@ def get_message_type(data):
 
 
 def is_valid_message(msg):
-    valid_msgs = ["Gastos", "Agregar gasto", "Ver gastos"]
+    valid_msgs = ["Gastos", "Agregar gasto", "Ver gastos", "Borrar"]
     return msg in valid_msgs or "agregar" in msg
 
 
@@ -73,17 +73,6 @@ async def send_message(data):
 
 def get_text_message_input(recipient, msg):
     response_data = RESPONSE_MAP.get(msg, RESPONSE_MAP['default'])
-
-    # return json.dumps({
-    #         "messaging_product": "whatsapp",
-    #         "preview_url": False,
-    #         "recipient_type": "individual",
-    #         "to": recipient,
-    #         "type": "text",
-    #         "text": {
-    #             "body": "Agregado correctamente."
-    #         }
-    #     })
 
     return json.dumps({
         "messaging_product": "whatsapp",

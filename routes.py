@@ -6,7 +6,7 @@ from messages.message_helper import (
     is_valid_message,
     get_message
 )
-from sheets.sheets_helper import add_expense, get_total_expenses
+from sheets.expense_manager import ExpenseManager
 import json
 
 # Create a Blueprint object
@@ -32,17 +32,28 @@ async def webhook_whatsapp():
         current_app.logger.info("is valid message, not valid: %s", msg)
         return "Invalid message."
 
+    service_account_path = current_app.config["SERVICE_ACCOUNT_PATH"]
+    spreadsheet = current_app.config["SPREADSHEET"]
+    worksheet = current_app.config["WORKSHEET"]
+
+    expense_manager = ExpenseManager(
+        service_account_path, spreadsheet, worksheet)
+
     if 'agregar' in msg:
         message_parts = msg.split(" ")
         amount, msg = message_parts
         current_app.logger.info("Adding expense: %s", msg)
-        add_expense(int(amount))
+        expense_manager.add_expense(int(amount))
 
     message = get_text_message_input(
         current_app.config['RECIPIENT_WAID'], msg)
 
+    if 'borrar' in msg:
+        expense_manager.delete_expenses()
+        current_app.logger.info("Deleted expenses")
+
     if 'Ver gastos' in msg:
-        total_expenses = get_total_expenses()
+        total_expenses = expense_manager.get_total_expenses()
         message_dict = json.loads(message)
         message_dict['text']['body'] = f'Gastos totales: {total_expenses}'
         message = json.dumps(message_dict)

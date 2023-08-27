@@ -14,7 +14,10 @@ config = {
     "VERSION": os.getenv("VERSION"),
     "PHONE_NUMBER_ID": os.getenv("PHONE_NUMBER_ID"),
     "ACCESS_TOKEN": os.getenv("ACCESS_TOKEN"),
-    "VERIFY_TOKEN": os.getenv("VERIFY_TOKEN")
+    "VERIFY_TOKEN": os.getenv("VERIFY_TOKEN"),
+    "SERVICE_ACCOUNT_PATH": os.getenv("SERVICE_ACCOUNT_PATH"),
+    "SPREADSHEET": os.getenv("SPREADSHEET"),
+    "WORKSHEET": os.getenv("WORKSHEET"),
 }
 
 app.config.update(config)

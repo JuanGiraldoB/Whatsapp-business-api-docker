@@ -52,17 +52,3 @@ async def webhook_whatsapp():
     current_app.logger.info("msg was sent: %s", message)
 
     return jsonify({'status': 'success'}), 200
-
-
-@routes_bp.route("/")
-def index():
-    return render_template('index.html', name=__name__)
-
-
-@routes_bp.route('/welcome', methods=['POST'])
-async def welcome():
-    data = get_text_message_input(
-        current_app.config['RECIPIENT_WAID'], 'Welcome to the Flight Confirmation Demo App for Python!')
-    await send_message(data)
-
-    return redirect(url_for('index'))

@@ -92,5 +92,10 @@ def get_text_message_input(recipient, msg):
     #     })
 
     return json.dumps({
-        response_data
+        "messaging_product": response_data['messaging_product'],
+        'preview_url': response_data['preview_url'],
+        'recipient_type': response_data['recipient_type'],
+        'to': response_data['to'],
+        "type": response_data["type"],
+        "text": response_data["text"]
     })

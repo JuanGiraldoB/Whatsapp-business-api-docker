@@ -1,7 +1,7 @@
 import aiohttp
 import json
 from flask import current_app
-from response_map import RESPONSE_MAP
+from messages.response_map import RESPONSE_MAP
 
 
 def exists_message(data: dict):

@@ -1,6 +1,7 @@
 import aiohttp
 import json
 from flask import current_app
+from response_map import RESPONSE_MAP
 
 
 def exists_message(data: dict):
@@ -71,141 +72,17 @@ async def send_message(data):
 
 
 def get_text_message_input(recipient, msg):
-
-    if msg == "Gastos":
-        return json.dumps(
-            {
-                "messaging_product": "whatsapp",
-                "recipient_type": "individual",
-                "to": recipient,
-                "type": "interactive",
-                "interactive": {
-                    "type": "button",
-                    "body": {
-                        "text": "Desea..."
-                    },
-                    "action": {
-                        "buttons": [
-                            {
-                                "type": "reply",
-                                "reply": {
-                                    "id": "agregar_gasto",
-                                    "title": "Agregar gasto"
-                                }
-                            },
-                            {
-                                "type": "reply",
-                                "reply": {
-                                    "id": "ver_gastos",
-                                    "title": "Ver gastos"
-                                }
-                            }
-                        ]
-                    }
-                }
-            }
-        )
-
-    if msg == "Agregar gasto":
-        return json.dumps({
-            "messaging_product": "whatsapp",
-            "preview_url": False,
-            "recipient_type": "individual",
-            "to": recipient,
-            "type": "text",
-            "text": {
-                "body": "Para agregar un gasto, digite la cantidad, seguido de la palabra 'agregar', Por ejemplo: xxxxxxx agregar"
-            }
-        })
-
-    if msg == "agregar":
-        return json.dumps({
-            "messaging_product": "whatsapp",
-            "preview_url": False,
-            "recipient_type": "individual",
-            "to": recipient,
-            "type": "text",
-            "text": {
-                "body": "Agregado correctamente."
-            }
-        })
-
-    if msg == "Ver gastos":
-        return json.dumps({
-            "messaging_product": "whatsapp",
-            "preview_url": False,
-            "recipient_type": "individual",
-            "to": recipient,
-            "type": "text",
-            "text": {
-                "body": ""
-            }
-        })
-
-    return json.dumps({
+    response_data = RESPONSE_MAP.get(msg, RESPONSE_MAP['default'])
+    response_data.update({
         "messaging_product": "whatsapp",
         "preview_url": False,
         "recipient_type": "individual",
-        "to": recipient,
-        "type": "text",
-        "text": {
-            "body": "Mensaje invalido"
-        }
+        "to": recipient
     })
 
-    # return json.dumps(
-    #     {
-    #         "messaging_product": "whatsapp",
-    #         "recipient_type": "individual",
-    #         "to": recipient,
-    #         "type": "interactive",
-    #         "interactive": {
-    #             "type": "list",
-    #             "header": {
-    #                 "type": "text",
-    #                 "text": "HEADER_TEXT"
-    #             },
-    #             "body": {
-    #                 "text": "BODY_TEXT"
-    #             },
-    #             "footer": {
-    #                 "text": "FOOTER_TEXT"
-    #             },
-    #             "action": {
-    #                 "button": "BUTTON_TEXT",
-    #                 "sections": [
-    #                     {
-    #                         "title": "SECTION_1_TITLE",
-    #                         "rows": [
-    #                             {
-    #                                 "id": "SECTION_1_ROW_1_ID",
-    #                                 "title": "SECTION_1_ROW_1_TITLE",
-    #                                 "description": "SECTION_1_ROW_1_DESCRIPTION"
-    #                             },
-    #                             {
-    #                                 "id": "SECTION_1_ROW_2_ID",
-    #                                 "title": "SECTION_1_ROW_2_TITLE",
-    #                                 "description": "SECTION_1_ROW_2_DESCRIPTION"
-    #                             }
-    #                         ]
-    #                     },
-    #                     {
-    #                         "title": "SECTION_2_TITLE",
-    #                         "rows": [
-    #                             {
-    #                                 "id": "SECTION_2_ROW_1_ID",
-    #                                 "title": "SECTION_2_ROW_1_TITLE",
-    #                                 "description": "SECTION_2_ROW_1_DESCRIPTION"
-    #                             },
-    #                             {
-    #                                 "id": "SECTION_2_ROW_2_ID",
-    #                                 "title": "SECTION_2_ROW_2_TITLE",
-    #                                 "description": "SECTION_2_ROW_2_DESCRIPTION"
-    #                             }
-    #                         ]
-    #                     }
-    #                 ]
-    #             }
-    #         }
-    #     }
-    # )
+    current_app.logger.info(response_data)
+
+    return json.dumps({
+        'type': response_data['type'],
+        'text': response_data['text']
+    })

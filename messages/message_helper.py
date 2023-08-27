@@ -80,7 +80,20 @@ def get_text_message_input(recipient, msg):
         "to": recipient
     })
 
-    current_app.logger.info(response_data)
+    current_app.logger.info("response data%s", response_data)
+    current_app.logger.info("text %s", response_data['text'])
+    current_app.logger.info("type %s", response_data['type'])
+
+    # return json.dumps({
+    #         "messaging_product": "whatsapp",
+    #         "preview_url": False,
+    #         "recipient_type": "individual",
+    #         "to": recipient,
+    #         "type": "text",
+    #         "text": {
+    #             "body": "Agregado correctamente."
+    #         }
+    #     })
 
     return json.dumps({
         'type': response_data['type'],
